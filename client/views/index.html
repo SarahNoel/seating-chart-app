@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html ng-app ='seatingChartApp'>
+  <head>
+    <meta charset="utf-8">
+    <base href="/">
+
+    <title>Class Seating Chart</title>
+
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href='//fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/main.css">
+  </head>
+<!--HEADER-->
+  <body ng-controller='MainController'>
+    <div class="container">
+    <div class='title-info'>
+    <h1>Seating Chart Maker</h1>
+    <h4>Let's Organize your Class.</h4>
+    </div>
+    <br>
+
+<div class = "container">
+  <div class ='button-div'>
+    <button class='btn btn-default' ng-click ="getAll()">See all/edit students</a></button>
+    &nbsp
+    <button class='btn btn-default' ng-click ="chartFunction()">Create Charts</button>
+    &nbsp
+    <button class='btn btn-default' ng-click ="showStudents = showChart = false; showOneStudent = addNew = cancel = true">Add New Student</button>
+  </div>
+<!--END HEADER-->
+
+
+<!--STUDENT TABLE-->
+  <table ng-show ='showStudents' class = 'table-bordered project-table'>
+    <thead>
+      <tr>
+        <th>Picture</th>
+        <th>Student Name</th>
+        <th>Gender</th>
+        <th>Restrictions</th>
+        <th>Edit Options</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat= 'student in studentData' ng-class-odd="'fill'">
+        <td><img class='student-pic' src="{{student.picture}}"></td>
+
+        <td> {{student.name}} </td>
+
+        <td> {{student.gender}} </td>
+
+        <td ng-repeat = 'restriction in student.restrictions'> {{restriction}} </td>
+
+        <td>
+          <div class= 'edit-buttons'>
+            <button class ='btn btn-success btn-edit' ng-click= "getOne(student._id)"><span class="glyphicon glyphicon-pencil"></span></button>
+
+            <button class ='btn-edit btn btn-danger' ng-click = 'deleteOne(student._id)'><span class="glyphicon glyphicon-trash"></span></button>
+          </div>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+<!--END STUDENT TABLE-->
+
+
+
+<!--EDIT ONE STUDENT-->
+  <div ng-show='showOneStudent' class = 'edit-student-div'>
+    <br>
+    <form name = 'addForm'>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input name="name" ng-model="name" type="text" class="form-control" required>
+      </div>
+
+      <div class="form-group">
+        <label for="gender">Gender:</label>
+        <input name="gender" ng-model="gender" type="text" class="form-control"required>
+      </div>
+
+      <div class="form-group">
+        <label for="picture">Picture URL:</label>
+        <input name="picture" ng-model="picture" type="text" class="form-control"required>
+      </div>
+
+      <div class="form-group">
+        <label for="restrictions">Restrictions:</label>
+        <input name="restrictions" ng-model="restrictions" type="text" class="form-control"required>
+      </div>
+    </form>
+
+    <button ng-disabled="addForm.$invalid" ng-show= 'addNew' ng-hide='update' ng-click="addOne()" type="submit" class="btn btn-success" ng-disabled="addForm.$invalid">Add New Student</button>
+
+    <button ng-disabled="addForm.$invalid" ng-click="updateOne()" ng-show = 'update' ng-hide = 'addNew' type="submit" class="btn btn-primary">Save</button>
+
+    <button ng-click="showOneStudent=false; hide=false; edit=false " ng-show= 'addNew; update; cancel' type="submit" class="btn btn-warning">Cancel</button>
+
+  </div>
+<!--END EDIT ONE STUDENT-->
+
+
+
+<!--SEATING CHART-->
+  <div ng-show='showChart' class = 'chart-maker-div'>
+  <h4>This is where you will make a chart! </h4>
+
+  <div ng-model = 'desks' class='desks'>
+    <div  ng-repeat='student in studentChartData'>
+     <div> <img src ='{{student.picture}}' class = 'deskDiv'><br>
+     {{student.name}}
+    </div>
+
+
+  </div>
+
+
+  </div>
+<!--END SEATING CHART-->
+
+
+
+
+
+</div>
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src = '//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.min.js'></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-route.js"></script>
+    <script type="text/javascript" src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/i18n/angular-locale_zu.js'></script>
+    <script type="text/javascript" src="/js/directives.js"></script>
+    <script type="text/javascript" src="/js/filter.js"></script>
+    <script type="text/javascript" src="/js/services.js"></script>
+    <script type="text/javascript" src="/js/controller.js"></script>
+  </body>
+</html>

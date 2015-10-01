@@ -1,0 +1,122 @@
+body {
+  padding: 50px;
+  font-family: 'Poiret One', cursive;
+  background-color: #f6ebdf;
+}
+
+a {
+  color: #00004c;
+  text-decoration: underline;
+}
+
+table{
+  margin-top: 15px;
+  width: 100%;
+  background-color: #bed68b;
+  text-align: center;
+}
+
+th{
+  font-size: 16px;
+  padding: 5px;
+  text-align: center;
+  background-color: #d89b46;
+  color: white;
+}
+
+td{
+  padding: 5px;
+
+}
+
+.btn-edit{
+  margin: 5px;
+}
+
+.btn-add{
+  float: right;
+}
+
+.add-form{
+  width: 85%;
+  margin: auto;
+}
+
+.fill{
+  background-color: #a4b9bd;
+}
+
+input{
+  margin: 15px;
+}
+
+.form-div{
+  margin-bottom: 20px;
+}
+
+.radio{
+  margin-left: 5px;
+  padding: 10px;
+}
+
+.title-info{
+  text-align: center;
+  background-color: #c35c5c;
+  padding: 10px;
+  width: 50%;
+  margin: auto;
+  border-radius: 15px;
+  color: white;
+  border: thin #884040 solid;
+}
+
+.width{
+  width: 85%;
+}
+
+.edit-buttons{
+  margin: auto;
+  display: table;
+}
+
+.btn-primary{
+  background-color: #7a4d8b;
+  border: #7a4d8b;
+}
+
+.btn-primary:hover{
+  background-color: #613d6f;
+}
+
+.btn-success, .btn-success:disabled, .btn-success:disabled:hover, .btn-success:active{
+  background-color: #008282;
+  border: #008282
+}
+
+.btn-success:hover{
+  background-color: #006868;
+}
+
+.btn-danger{
+  background-color: #9c4949;
+  border-color: #9c4949;
+}
+
+.btn-danger:hover{
+  background-color: #7c3a3a;
+}
+
+.button-div{
+  margin: auto;
+  display: table;
+}
+
+.student-pic{
+  height: 100px;
+  margin: auto;
+  display: table;
+}
+
+.deskDiv{
+  height: 80px;
+}
