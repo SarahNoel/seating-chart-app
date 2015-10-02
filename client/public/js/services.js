@@ -77,7 +77,7 @@ app.factory('SeatingService', function(){
       studentInput = data.data;
       // shuffles given array
       while(studentInput.length > 0) {
-        var index = Math.floor(Math.random() * studentInput.length);
+        var index = Math.floor(Math.random() * (studentInput.length));
         students.push(studentInput[index]);
         studentInput.splice(index, 1);
       }
@@ -115,7 +115,7 @@ app.factory('SeatingService', function(){
               }
             }
           }
-          else if(current.name === students[i+1].restrictions[0] || current.name === students[i+1].restrictions[0] || current.restrictions[0] === students[i+1].name || current.restrictions[0] === students[i-1].name){
+          else if(current.name === students[i+1].restrictions[0] || current.name === students[i-1].restrictions[0] || current.restrictions[0] === students[i+1].name || current.restrictions[0] === students[i-1].name){
             movesMade++;
             if(current.name != students[students.length-1].restrictions[0] && current.restrictions[0] != students[students.length-1].name){
               movesMade++;
