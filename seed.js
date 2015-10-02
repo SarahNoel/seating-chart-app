@@ -24,8 +24,20 @@ var studentSeed = [
   "name" : "Carl Wheezer",
   "gender" : "Male",
   "picture" : "http://vignette2.wikia.nocookie.net/jimmyneutron/images/8/86/CarlWheezer.jpg/revision/latest?cb=20080714175127",
+  "restrictions" : ["none"],
+  },
+  {
+  "name" : "Sheen Estevez",
+  "gender" : "Male",
+  "picture" : "http://vignette2.wikia.nocookie.net/jimmyneutron/images/3/35/Sheen.png/revision/latest?cb=20120225213915",
   "restrictions" : ["Jimmy Nuetron"],
-  }
+  },
+  {
+  "name" : "Nick Dean",
+  "gender" : "Male",
+  "picture" : "http://vignette4.wikia.nocookie.net/jimmyneutron/images/5/5b/Nd.jpg/revision/latest?cb=20130628054705",
+  "restrictions" : ["Cindy Vortex"],
+  },
 ];
 
 function databaseSeed() {

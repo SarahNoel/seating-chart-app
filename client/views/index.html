@@ -104,10 +104,10 @@
 
 <!--SEATING CHART-->
   <div ng-show='showChart' class = 'chart-maker-div'>
-  <h4>This is where you will make a chart! </h4>
+  <h4 class = 'center'>Let's separate those trouble makers... </h4>
 
   <div ng-model = 'desks' class='desks'>
-    <div  ng-repeat='student in studentChartData'>
+    <div class='one-student' ng-repeat='student in studentChartData'>
      <div> <img src ='{{student.picture}}' class = 'deskDiv'><br>
      {{student.name}}
     </div>

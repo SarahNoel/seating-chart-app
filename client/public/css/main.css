@@ -28,6 +28,9 @@ td{
   padding: 5px;
 
 }
+.center{
+  text-align: center;
+}
 
 .btn-edit{
   margin: 5px;
@@ -119,4 +122,12 @@ input{
 
 .deskDiv{
   height: 80px;
+}
+
+.one-student{
+  margin-left: 20px;
+}
+
+.desks{
+  display: inline-flex;
 }
