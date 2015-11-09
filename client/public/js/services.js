@@ -20,7 +20,7 @@ app.factory('SeatingService', [ '$http','$q', function($http, $q){
     return deferred.promise;
   };
 
-  SeatingService.addOne = function($scope, $http){
+  SeatingService.addOne = function($http, payload){
     var deferred = $q.defer();
     $http.post('/api/v1/students/', payload)
     .then(function(data){
@@ -94,7 +94,7 @@ app.factory('SeatingService', [ '$http','$q', function($http, $q){
           shuffled = true;
         }
         if(attempts > 4000){
-          deferred.resolve({students:students, message:"After many attempts, this is as shuffled as we can get it."});
+          deferred.resolve({students:students, message:"This is as shuffled as we can get it in a reasonable time.  Click to try again!"});
           return deferred.promise;
         }
         else{

@@ -50,7 +50,7 @@
 
         <td> {{student.gender}} </td>
 
-        <td ng-repeat = 'restriction in student.restrictions'> {{restriction}} </td>
+        <td> {{student.restrictions | arrayFilter}} </td>
 
         <td>
           <div class= 'edit-buttons'>
@@ -87,7 +87,7 @@
       </div>
 
       <div class="form-group">
-        <label for="restrictions">Restrictions:</label>
+        <label for="restrictions">Restrictions:<br>(separated by commas)</label>
         <input name="restrictions" ng-model="restrictions" type="text" class="form-control"required>
       </div>
     </form>
@@ -106,7 +106,7 @@
 <!--SEATING CHART-->
   <div ng-show='showChart' class = 'chart-maker-div'>
   <h4 class = 'center'>Let's separate those trouble makers... </h4>
-  <p> {{message}} </p>
+  <p class='center'> {{message}} </p>
   <div ng-model = 'desks' class='desks'>
     <div class='one-student' ng-repeat='student in studentChartData'>
      <div> <img src ='{{student.picture}}' class = 'deskDiv'><br>

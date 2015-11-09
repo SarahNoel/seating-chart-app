@@ -18,7 +18,7 @@ var studentSeed = [
   "name" : "Libby Folfax",
   "gender" : "Female",
   "picture" : "http://images1.nick.com/nick-assets/shows/images/jimmy-neutron/characters/character_large_332x363_libby.jpg?height=363&width=332&quality=0.75",
-  "restrictions" : ["Cindy Vortex"],
+  "restrictions" : ["Cindy Vortex", "Nick Dean"],
   },
   {
   "name" : "Carl Wheezer",
@@ -38,6 +38,12 @@ var studentSeed = [
   "picture" : "http://vignette4.wikia.nocookie.net/jimmyneutron/images/5/5b/Nd.jpg/revision/latest?cb=20130628054705",
   "restrictions" : ["Cindy Vortex"],
   },
+  {
+  "name" : "Betty Quinlan",
+  "gender" : "Female",
+  "picture" : "http://vignette1.wikia.nocookie.net/jimmyneutron/images/3/30/Betty_Quinlan.jpg/revision/latest?cb=20090811223239",
+  "restrictions" : ["none"],
+  }
 ];
 
 function databaseSeed() {

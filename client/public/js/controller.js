@@ -16,10 +16,11 @@ app.controller('MainController',['$scope', '$location', '$http', 'SeatingService
     SeatingService.getOne($http, id)
     .then(function(data){
       var student = data.data;
+      var restrict = stringMaker(student.restrictions);
       $scope.name = student.name;
       $scope.gender = student.gender;
       $scope.picture = student.picture;
-      $scope.restrictions = student.restrictions;
+      $scope.restrictions = restrict;
       $scope.id = student._id;
     });
   };
@@ -27,26 +28,28 @@ app.controller('MainController',['$scope', '$location', '$http', 'SeatingService
   $scope.addOne = function(){
     $scope.showOneStudent = true;
     $scope.showStudents = $scope.showChart = false;
+    var restrict = arrayMaker($scope.restrictions);
     var payload = {
       name: $scope.name,
       gender: $scope.gender,
       picture: $scope.picture,
-      restrictions: $scope.restrictions,
+      restrictions: restrict,
     };
     SeatingService.addOne($http, payload)
     .then(function(data){
-    $scope.getAll($scope, $http);
+    $scope.getAll();
     $scope.showOneStudent = $scope.showChart = false;
     $scope.showStudents = true;
     });
   };
 
   $scope.updateOne = function(){
-     var payload = {
+    var restrict = arrayMaker($scope.restrictions);
+    var payload = {
       name: $scope.name,
       gender: $scope.gender,
       picture: $scope.picture,
-      restrictions: $scope.restrictions,
+      restrictions: restrict,
     };
     SeatingService.updateOne($http, this.id, payload)
     .then(function(data){
@@ -73,6 +76,20 @@ app.controller('MainController',['$scope', '$location', '$http', 'SeatingService
     });
   };
 
+  function arrayMaker(str){
+    var arr = str.split(',');
+    for (var i = 0; i < arr.length; i++) {
+      arr[i] = arr[i].trim();
+    }
+    return arr;
+  }
+
+  function stringMaker(array){
+    array = array.join().replace(/,/g, ', ');
+    return array;
+  }
+
+ $scope.getAll();
 }]);
 
 
