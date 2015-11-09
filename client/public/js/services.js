@@ -1,77 +1,61 @@
-app.factory('SeatingService', function(){
+app.factory('SeatingService', [ '$http','$q', function($http, $q){
   var SeatingService = {};
 
-  SeatingService.getAll = function($scope, $http){
-    $scope.showStudents = true;
-    $scope.showOneStudent =  $scope.showChart = false;
+  SeatingService.getAll = function($http){
+    var deferred = $q.defer();
     $http.get('/api/v1/students')
     .then(function(data) {
-      $scope.studentData = data.data;
+      deferred.resolve(data);
     });
+    return deferred.promise;
   };
 
 
-  SeatingService.getOne= function($scope, $http, id){
-    $scope.showOneStudent = $scope.update =  true;
-    $scope.showStudents = $scope.showChart = false;
+  SeatingService.getOne= function($http, id){
+    var deferred = $q.defer();
     $http.get('/api/v1/student/' + id)
     .then(function(data) {
-      var student = data.data;
-      $scope.name = student.name;
-      $scope.gender = student.gender;
-      $scope.picture = student.picture;
-      $scope.restrictions = student.restrictions;
-      $scope.id = student._id;
+      deferred.resolve(data);
     });
+    return deferred.promise;
   };
 
   SeatingService.addOne = function($scope, $http){
-    $scope.showOneStudent = true;
-    $scope.showStudents = $scope.showChart = false;
-    var payload = {
-      name: $scope.name,
-      gender: $scope.gender,
-      picture: $scope.picture,
-      restrictions: $scope.restrictions,
-    };
+    var deferred = $q.defer();
     $http.post('/api/v1/students/', payload)
-    .then(function(data) {
-    });
-    $scope.getAll($scope, $http);
-    $scope.showOneStudent = $scope.showChart = false;
-    $scope.showStudents = true;
-  };
-
-  SeatingService.updateOne= function($scope, $http, place){
-     var payload = {
-      name: $scope.name,
-      gender: $scope.gender,
-      picture: $scope.picture,
-      restrictions: $scope.restrictions,
-    };
-    $http.put('/api/v1/student/'+place.id, payload)
     .then(function(data){
-      $scope.name = $scope.gender = $scope.picture = $scope.restrictions = ('');
-      $scope.getAll($scope, $http);
+      deferred.resolve(data);
     });
+    return deferred.promise;
   };
 
-  SeatingService.deleteOne = function($scope, $http, id){
+  SeatingService.updateOne= function($http, id, payload){
+    var deferred = $q.defer();
+    $http.put('/api/v1/student/'+id, payload)
+    .then(function(data){
+      deferred.resolve(data);
+    });
+    return deferred.promise;
+  };
+
+  SeatingService.deleteOne = function($http, id){
+    var deferred = $q.defer();
     $http.delete('/api/v1/student/'+id)
     .then(function(data){
-    $scope.getAll($scope, $http);
+      deferred.resolve(data);
     });
+    return deferred.promise;
   };
 
-  SeatingService.getAllChart = function($scope, $http){
-    $scope.randoChart = $scope.showChart = true;
-    $scope.showStudents = $scope.showOneStudent = $scope.addNew = $scope.cancel = $scope.firstChart = false;
+  SeatingService.getAllChart = function($http){
+    var deferred = $q.defer();
     var shuffled = false;
     var current;
     var studentInput;
     var students = [];
     var movesMade = 0;
-    var move;
+    var attempts = 0;
+
     $http.get('/api/v1/students')
     .then(function(data) {
       studentInput = data.data;
@@ -82,117 +66,45 @@ app.factory('SeatingService', function(){
         studentInput.splice(index, 1);
       }
       // checks for restrictions
-      while (shuffled ===false){
+      while (shuffled === false){
         for (var i = 0; i < students.length; i++) {
           current = students[i];
+          attempts++;
           if(i === 0){
-            if(current.name === students[1].restrictions[0] || current.restrictions[0] === students[1].name){
-              if(current.name != students[students.length-1].restrictions[0] && current.restrictions[0] != students[students.length-1].name){
+            if(students[1].restrictions[0].indexOf(current.name) != -1 || current.restrictions[0].indexOf(students[1].name) != -1) {
               movesMade++;
               students.splice(i, 1);
               students.push(current);
-              }
-              else{
-              movesMade++;
-              move = Math.floor(Math.random() * students.length);
-              students.splice(i, 1);
-              students.push(move, 0, current);
-              }
             }
           }
           else if(i === students.length-1){
-            if(current.name === students[i-1].restrictions[0] || current.restrictions[0] === students[i-1].name){
-              if(current.name != students[0].restrictions[0] && current.restrictions[0] != students[0].name){
+            if(students[i-1].restrictions[0].indexOf(current.name) != -1 || current.restrictions[0].indexOf(students[i-1].name) != -1){
               movesMade++;
               students.splice(i, 1);
               students.splice(0, 0, current);
-              }
-              else{
-                movesMade++;
-                move = Math.floor(Math.random() * students.length);
-                students.splice(i, 1);
-                students.push(move, 0, current);
-              }
             }
           }
-          else if(current.name === students[i+1].restrictions[0] || current.name === students[i-1].restrictions[0] || current.restrictions[0] === students[i+1].name || current.restrictions[0] === students[i-1].name){
-            movesMade++;
-            if(current.name != students[students.length-1].restrictions[0] && current.restrictions[0] != students[students.length-1].name){
+          else if(students[i+1].restrictions[0].indexOf(current.name) != -1 || students[i-1].restrictions[0].indexOf(current.name) != -1 || current.restrictions[0].indexOf(students[i+1].name) != -1 || current.restrictions[0].indexOf(students[i-1].name) != -1) {
               movesMade++;
               students.splice(i, 1);
               students.push(current);
-            }
-            else{
-              movesMade++;
-              move = Math.floor(Math.random() * students.length);
-              students.splice(i, 1);
-              students.push(move, 0, current);
-            }
           }
         }
         if(movesMade === 0){
           shuffled = true;
         }
+        if(attempts > 4000){
+          deferred.resolve({students:students, message:"After many attempts, this is as shuffled as we can get it."});
+          return deferred.promise;
+        }
         else{
           movesMade = 0;
         }
       }
-      $scope.studentChartData = students;
+      deferred.resolve({students:students, message:null});
     });
+  return deferred.promise;
   };
 
-
-
-  //     studentInput = data.data;
-
-  //     // while(shuffled === false){
-  //     //   for (var i = 0; i < studentInput.length; i++) {
-  //     //     current = studentInput[i];
-  //     //     if(current.restrictions[0] != studentInput[i+1].restrictions[0]){
-  //     //       console.log('wooo');
-  //     //     }
-  //     //   }
-
-
-
-  //     // shuffled = true;
-  //     // }
-  //   $scope.studentChartData = studentInput;
-  //   });
-  // };
-
-
-
-  //     // studentInput = data.data;
-  //     while(studentInput.length > 0 ){
-  //       for (var i = 0; i < studentInput.length; i++) {
-  //         var index = Math.floor(Math.random() * studentInput.length);
-
-  //         if(students.length === 0){
-  //           students.push(studentInput[index]);
-  //           studentInput.splice(index, 1);
-  //         }
-  //         else{
-  //           if(studentInput[index].name != students[students.length-1].restrictions[0]){
-  //           students.push(studentInput[index]);
-  //           studentInput.splice(index, 1);
-  //           }
-  //           else{
-  //             for (var j = 0; j < students.length; j++) {
-  //               if(studentInput[index].name != students[j].restrictions[0] && studentInput[index].name != students[j-1].restrictions[0]){
-  //                 students.splice(students[j], 0, studentInput[index]);
-  //                 studentInput.splice(index, 1);
-  //               }
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //   $scope.studentChartData = students;
-  //   });
-  // };
-
-
-
 return SeatingService;
-});
+}]);

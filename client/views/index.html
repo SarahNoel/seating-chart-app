@@ -10,6 +10,7 @@
     <link href='//fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/css/main.css">
   </head>
+
 <!--HEADER-->
   <body ng-controller='MainController'>
     <div class="container">
@@ -105,7 +106,7 @@
 <!--SEATING CHART-->
   <div ng-show='showChart' class = 'chart-maker-div'>
   <h4 class = 'center'>Let's separate those trouble makers... </h4>
-
+  <p> {{message}} </p>
   <div ng-model = 'desks' class='desks'>
     <div class='one-student' ng-repeat='student in studentChartData'>
      <div> <img src ='{{student.picture}}' class = 'deskDiv'><br>
